@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "acecd0e9-e90f-4cf2-9051-99c3b992fd55",
+		"name": "candidate_app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Candidate",
+			"item": [
+				{
+					"name": "Get Candidato",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/v1/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"v1",
+								"api",
+								"candidates",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Candidato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ELTIGER\",\r\n    \"lastname\": \"MOSNTRO\",\r\n    \"ci\": \"94073029908\",\r\n    \"address\": \"string\",\r\n    \"age\": 20,\r\n    \"gender\": \"male\",\r\n    \"techs\": [\r\n        {\r\n            \"title\": \"PYTHON\",\r\n            \"years\": 8\r\n        },\r\n        {\r\n            \"title\": \"CSS\",\r\n            \"years\": 18\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/v1/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"v1",
+								"api",
+								"candidates",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Tech",
+			"item": [
+				{
+					"name": "Get Techs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/v1/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"v1",
+								"api",
+								"candidates",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Candidato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ELTIGER\",\r\n    \"lastname\": \"MOSNTRO\",\r\n    \"ci\": \"94073029908\",\r\n    \"address\": \"string\",\r\n    \"age\": 20,\r\n    \"gender\": \"male\",\r\n    \"techs\": [\r\n        {\r\n            \"title\": \"PYTHON\",\r\n            \"years\": 8\r\n        },\r\n        {\r\n            \"title\": \"CSS\",\r\n            \"years\": 18\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/v1/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"v1",
+								"api",
+								"candidates",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
