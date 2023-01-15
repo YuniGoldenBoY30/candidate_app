@@ -1,0 +1,70 @@
+version: '4.2'
+
+volumes:
+  postgres-db:
+    driver: local
+networks:
+  app:
+    driver: bridge
+
+services:
+  postgres_db:
+    image: docker.uclv.cu/postgres:latest
+    container_name: postgres_db
+    ports:
+      - '6500:5432'
+    restart: always
+    env_file:
+      - ./observatorio-api/.env
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - app
+
+  backend:
+    image: observatorio-api:1.0.5
+    container_name: observatorio-api
+    build:
+      context: observatorio-api
+      dockerfile: Dockerfile
+    ports:
+      - 9000:8000
+    tty: true
+    restart: always
+    working_dir: "/usr/src/app"
+    env_file:
+      - ./observatorio-api/.env
+    volumes:
+      - ./observatorio-api/venv:/usr/local/lib/python3.9/site-packages/app
+      - ./observatorio-api:/usr/src/app
+    command:
+      [
+        "uvicorn",
+        "main:app",
+        "--host",
+        "0.0.0.0",
+        "--reload",
+        "--reload-dir",
+        "/usr/src/app",
+        "--reload-dir",
+        "/usr/local/lib/python3.9/site-packages"
+      ]
+    networks:
+      - app
+    depends_on:
+      - postgres_db
+  frontend:
+    build:
+      context: observatorio-pam
+      target: 'develop-stage'
+    image: observatorio:1.0.5
+    container_name: observatorio-web
+    ports:
+      - '80:8080'
+    volumes:
+      - './observatorio-pam:/app'
+    command: /bin/sh -c "yarn && quasar dev"
+    depends_on:
+      - backend
+    networks:
+      - app
