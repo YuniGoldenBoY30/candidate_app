@@ -8,62 +8,51 @@ networks:
     driver: bridge
 
 services:
-  postgres_db:
+  postgres_app:
     image: docker.uclv.cu/postgres:latest
-    container_name: postgres_db
+    container_name: postgres_app
     ports:
       - '6500:5432'
     restart: always
     env_file:
-      - ./observatorio-api/.env
+      - ./candidate_api/.env
     volumes:
       - postgres-db:/var/lib/postgresql/data
     networks:
       - app
 
   backend:
-    image: observatorio-api:1.0.5
-    container_name: observatorio-api
+    image: candidate-api:0.0.1
+    container_name: candidate_api
     build:
-      context: observatorio-api
+      context: candidate_api
       dockerfile: Dockerfile
     ports:
-      - 9000:8000
+      - 9001:8001
     tty: true
     restart: always
     working_dir: "/usr/src/app"
     env_file:
-      - ./observatorio-api/.env
+      - ./candidate_api/.env
     volumes:
-      - ./observatorio-api/venv:/usr/local/lib/python3.9/site-packages/app
-      - ./observatorio-api:/usr/src/app
-    command:
-      [
-        "uvicorn",
-        "main:app",
-        "--host",
-        "0.0.0.0",
-        "--reload",
-        "--reload-dir",
-        "/usr/src/app",
-        "--reload-dir",
-        "/usr/local/lib/python3.9/site-packages"
-      ]
+      - ./candidate_api/venv:/usr/local/lib/python3.9/site-packages/app
+      - ./candidate_api:/usr/src/app
+    command: python manage.py runserver 0.0.0.0:8001
     networks:
       - app
     depends_on:
-      - postgres_db
+      - postgres_app
   frontend:
     build:
-      context: observatorio-pam
+      context: candidate_web
       target: 'develop-stage'
-    image: observatorio:1.0.5
-    container_name: observatorio-web
+    image: candidate_web:0.0.1
+    container_name: candidate_web
     ports:
-      - '80:8080'
+      - '8050:8080'
     volumes:
-      - './observatorio-pam:/app'
-    command: /bin/sh -c "yarn && quasar dev"
+      - './candidate_web:/app'
+    command: /bin/sh -c "npm i && quasar dev"
     depends_on:
       - backend
     networks:
